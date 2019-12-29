@@ -14,29 +14,26 @@
 * limitations under the License.
 **************************************************************************/
 
-package com.ls.mappwidget.slicingtool.utils;
+package com.exploremetro.androidslicer.utils;
 
 import java.io.File;
 
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
-
-public class EclipseUtils
+public class FileUtils
 {
-	private EclipseUtils()
+	public static boolean deleteDir(File dir)
 	{
-	}
-
-	public static File getCurrentWorkspace()
-	{
-		IWorkspace workspace = ResourcesPlugin.getWorkspace();
-		IWorkspaceRoot root = workspace.getRoot();
-
-		IPath location = root.getLocation();
-		location.toFile();
-
-		return location.toFile();
+		if (dir.isDirectory())
+		{
+			String[] children = dir.list();
+			for (int i = 0; i < children.length; i++)
+			{
+				boolean success = deleteDir(new File(dir, children[i]));
+				if (!success)
+				{
+					return false;
+				}
+			}
+		}
+		return dir.delete();
 	}
 }

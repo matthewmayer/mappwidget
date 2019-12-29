@@ -14,7 +14,7 @@
 * limitations under the License.
 **************************************************************************/
 
-package com.ls.mappwidget.slicingtool.cutter;
+package com.exploremetro.androidslicer.cutter;
 
 public class Constants
 {

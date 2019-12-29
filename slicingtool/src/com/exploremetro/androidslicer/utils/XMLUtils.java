@@ -14,7 +14,7 @@
 * limitations under the License.
 **************************************************************************/
 
-package com.ls.mappwidget.slicingtool.utils;
+package com.exploremetro.androidslicer.utils;
 
 import java.io.File;
 

@@ -14,18 +14,17 @@
 * limitations under the License.
 **************************************************************************/
 
-package com.ls.mappwidget.slicingtool.cutter;
+package com.exploremetro.androidslicer.cutter;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.ls.mappwidget.slicingtool.utils.XMLUtils;
-import com.ls.mappwidget.slicingtool.vo.PointVO;
+import com.exploremetro.androidslicer.utils.XMLUtils;
 
 public class ImageXML
 {
-	public static void createXML(String fileName, int tileSize, int w, int h, PointVO pointTopLeft, PointVO pointBottomRight)
+	public static void createXML(String fileName, int tileSize, int w, int h)
 	{
 		Document doc = XMLUtils.createDoc();
 
@@ -37,48 +36,12 @@ public class ImageXML
 		rootElement.appendChild(sizeElement);
 		addSizeAttr(sizeElement, doc, w, h);
 
-		if (pointTopLeft != null)
-		{
-			Element colibrElement = doc.createElement(Constants.Tag.CALIBRATIONRECT);
-			rootElement.appendChild(colibrElement);
-
-			Element pointElement = doc.createElement(Constants.Tag.POINT);
-			colibrElement.appendChild(pointElement);
-			addPointAttr(pointElement, doc, pointTopLeft, true);
-
-			pointElement = doc.createElement(Constants.Tag.POINT);
-			colibrElement.appendChild(pointElement);
-			addPointAttr(pointElement, doc, pointBottomRight, false);
-		}
+		
 		
 		XMLUtils.saveDoc(doc, fileName);
 	}
 
-	private static void addPointAttr(Element pointElement, Document doc, PointVO point, boolean b)
-	{
-		Attr attr = doc.createAttribute(Constants.Attr.X);
-		attr.setValue(point.getX() + "");
-		pointElement.setAttributeNode(attr);
-
-		attr = doc.createAttribute(Constants.Attr.Y);
-		attr.setValue(point.getY() + "");
-		pointElement.setAttributeNode(attr);
-
-		attr = doc.createAttribute(Constants.Attr.LAT);
-		attr.setValue(point.getLat() + "");
-		pointElement.setAttributeNode(attr);
-
-		attr = doc.createAttribute(Constants.Attr.LON);
-		attr.setValue(point.getLon() + "");
-		pointElement.setAttributeNode(attr);
-
-		if (b)
-		{
-			attr = doc.createAttribute(Constants.Attr.TOPLEFT);
-			attr.setValue("1");
-			pointElement.setAttributeNode(attr);
-		}
-	}
+	
 
 	private static void addSizeAttr(Element sizeElement, Document doc, int w, int h)
 	{

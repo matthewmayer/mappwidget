@@ -14,7 +14,7 @@
 * limitations under the License.
 **************************************************************************/
 
-package com.ls.mappwidget.slicingtool.cutter;
+package com.exploremetro.androidslicer.cutter;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -23,8 +23,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.ls.mappwidget.slicingtool.views.MainView;
-import com.ls.mappwidget.slicingtool.vo.PointVO;
 
 public class Cutter
 {
@@ -38,7 +36,7 @@ public class Cutter
 		this.onComplite = onComplite;
 	}
 
-	public void startCuttingAndroid(final String inFile, final String outDir, final String mapName, final int tileSize, final PointVO pointTopLeft, final PointVO pointBottomRight)
+	public void startCuttingAndroid(final String inFile, final String outDir, final String mapName, final int tileSize)
 	{
 		new Thread(new Runnable()
 		{
@@ -55,8 +53,7 @@ public class Cutter
 				saveImage(inFile, "png", temp);
 
 				int count = (int) Math.ceil(Math.log(getMaxSide(temp)) / Math.log(2));
-				MainView.PROGRESS_MAX = count;
-
+				
 				for (int i = count; i >= 0; i--)
 				{
 					File fdir = new File(file.getAbsoluteFile(), "/" + i);
@@ -64,11 +61,11 @@ public class Cutter
 
 					if (i == count)
 					{
-						imageCut(temp, fdir.getAbsolutePath(), tileSize, fileXml.getAbsoluteFile() + "/" + mapName + ".xml", true, "", pointTopLeft, pointBottomRight);
+						imageCut(temp, fdir.getAbsolutePath(), tileSize, fileXml.getAbsoluteFile() + "/" + mapName + ".xml", true, "");
 					}
 					else
 					{
-						imageCut(temp, fdir.getAbsolutePath(), tileSize, null, false, "", pointTopLeft, pointBottomRight);
+						imageCut(temp, fdir.getAbsolutePath(), tileSize, null, false, "");
 					}
 
 					imageResize(temp, temp, 50);
@@ -90,7 +87,7 @@ public class Cutter
 		}
 	}
 
-	private void imageCut(String inFile, String outDir, int tileSize, String mapName, boolean xml, String concut, PointVO pointTopLeft, PointVO pointBottomRight)
+	private void imageCut(String inFile, String outDir, int tileSize, String mapName, boolean xml, String concut)
 	{
 		String s = "";
 
@@ -106,7 +103,7 @@ public class Cutter
 
 		if (xml)
 		{
-			ImageXML.createXML(mapName, tileSize, w, h, pointTopLeft, pointBottomRight);
+			ImageXML.createXML(mapName, tileSize, w, h);
 		}
 
 		if (w < tileSize && h < tileSize)
